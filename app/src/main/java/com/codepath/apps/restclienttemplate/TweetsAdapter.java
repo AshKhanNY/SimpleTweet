@@ -38,6 +38,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get data at pos
         Tweet tweet = tweets.get(position);
+
         // Bind tweet with view holder
         holder.bind(tweet);
     }
@@ -65,6 +66,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivProfilePic;
         TextView tvBody;
         TextView tvScreenName;
+        TextView tvTimestamp;
 
         // Represents one row (or a tweet!)
         public ViewHolder(@NonNull View itemView) {
@@ -72,11 +74,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
         }
 
         public void bind(Tweet tweet){
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+            tvTimestamp.setText(tweet.formattedTime);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfilePic);
         }
     }

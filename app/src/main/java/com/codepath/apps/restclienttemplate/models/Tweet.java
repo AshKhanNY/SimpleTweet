@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.codepath.apps.restclienttemplate.TimeFormatter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +36,8 @@ public class Tweet {
     @Ignore
     public User user;
 
+    public String formattedTime;
+
     // Empty constructor needed for parceler library
     public Tweet(){ }
 
@@ -41,6 +45,7 @@ public class Tweet {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
+        tweet.formattedTime = getFormattedTimestamp(tweet.createdAt);
         tweet.id = jsonObject.getLong("id");
         User user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.user = user;
@@ -53,5 +58,9 @@ public class Tweet {
         for (int i = 0; i < jsonArray.length(); ++i)
             tweets.add(fromJson(jsonArray.getJSONObject(i)));
         return tweets;
+    }
+
+    public static String getFormattedTimestamp(String createdAt){
+        return TimeFormatter.getTimeDifference(createdAt);
     }
 }
